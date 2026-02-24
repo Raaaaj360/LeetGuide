@@ -1,6 +1,6 @@
 # 🎯 LeetGuide – AI Problem Coach
 
-A Chrome extension that reads your active LeetCode problem and gives you **Socratic hints** powered by ChatGPT — guiding your thinking without ever spoiling the solution.
+A Chrome extension that reads your active LeetCode problem and gives you **Socratic hints** powered by Gemini — guiding your thinking without ever spoiling the solution.
 
 ---
 
@@ -99,7 +99,7 @@ leetcode-guide-extension/
 ## 🛠 Requirements
 
 - Google Chrome (or Chromium-based browser)
-- An OpenAI API key with access to `gpt-4o-mini`
+- An OpenAI API key with access to `gemini-1.5-flash`
 
 ---
 
