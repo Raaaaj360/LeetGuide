@@ -189,25 +189,35 @@ async function sendMessage(userText) {
 
   try {
     const systemPrompt = buildSystemPrompt(isLastHint);
-    const apiMessages = [
-      { role: 'system', content: systemPrompt },
-      ...state.messages.slice(0, -1) // exclude the just-added user message (we add it next)
-        .filter(m => m.role !== 'assistant' || !m.content.startsWith('👋')) // skip welcome
-        .map(m => ({ role: m.role, content: m.content })),
-      { role: 'user', content: userText },
-    ];
+    
+    // Filter messages for the API (remove welcome message & align roles)
+    const geminiContents = state.messages
+      .filter(m => m.role !== 'assistant' || !m.content.startsWith('👋')) 
+      .map(m => ({
+        role: m.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: m.content }]
+      }));
+    
+    // Add the user's latest message to the payload
+    geminiContents.push({
+      role: 'user',
+      parts: [{ text: userText }]
+    });
 
-    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+    // UPDATED: Using 'gemini-2.5-flash' which is the active free tier model as of Feb 2026
+    // If this hits a limit, try 'gemini-3-flash-preview'
+    const modelId = "gemini-2.5-flash"; 
+
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${state.apiKey}`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${state.apiKey}`,
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: apiMessages,
-        max_tokens: 1200,
-        temperature: 0.7,
+        system_instruction: { parts: [{ text: systemPrompt }] },
+        contents: geminiContents,
+        generationConfig: { 
+          maxOutputTokens: 2000, 
+          temperature: 0.7 
+        },
       }),
     });
 
@@ -217,7 +227,7 @@ async function sendMessage(userText) {
       throw new Error(data.error?.message || `API error ${res.status}`);
     }
 
-    const reply = data.choices[0]?.message?.content || 'Sorry, I couldn\'t generate a hint right now.';
+    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I couldn\'t generate a hint right now.';
     removeThinking();
     appendMessage('assistant', reply);
     persistChat();

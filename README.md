@@ -1,18 +1,16 @@
 # 🎯 LeetGuide – AI Problem Coach
-
 A Chrome extension that reads your active LeetCode problem and gives you **Socratic hints** powered by Gemini — guiding your thinking without ever spoiling the solution.
 
 ---
 
 ## ✨ Features
-
 - **Auto-reads the problem** — title, difficulty, and description extracted from the page
 - **Guided hints only** — the AI is instructed never to reveal the solution
 - **3 coaching styles**: Socratic (question-based), Direct (concise nudges), Gentle (step-by-step)
-- **Hint budget** — set a max of 3–10 hints per problem to keep yourself accountable the detailed breakdown is given on the last hint
+- **Hint budget** — set a max of 3–10 hints per problem to keep yourself accountable, the detailed breakdown is given on the last hint
 - **Quick actions** — one-click prompts for first hint, data structure suggestions, complexity targets
 - **Persistent chat** — your conversation is saved per-problem, pick up where you left off
-- **Gemini-1.5-flash powered** — fast and affordable
+- **Gemini-2.5-flash powered** — fast, affordable and more capable
 
 ---
 
@@ -20,7 +18,7 @@ A Chrome extension that reads your active LeetCode problem and gives you **Socra
 
 ### Step 1: Download / Clone
 ```
-git clone https://github.com/yourrepo/leetguide-extension
+git clone https://github.com/Raaaaj360/LeetGuide
 # or extract the zip
 ```
 
@@ -33,13 +31,12 @@ git clone https://github.com/yourrepo/leetguide-extension
 ### Step 3: Add your API Key
 1. Click the LeetGuide icon in your Chrome toolbar
 2. Click **⚙ Settings**
-3. Paste your [LLM API key]([https://aistudio.google.com/api-keys](https://aistudio.google.com)
+3. Paste your [Gemini API key](https://aistudio.google.com/app/apikey)
 4. Click **Save Settings**
 
 ---
 
 ## 🧠 How to Use
-
 1. Navigate to any LeetCode problem, e.g. `https://leetcode.com/problems/two-sum/`
 2. Click the **LeetGuide** extension icon
 3. The problem is automatically loaded
@@ -52,7 +49,7 @@ git clone https://github.com/yourrepo/leetguide-extension
 
 | Setting | Options | Description |
 |---|---|---|
-| API Key | Your LLM key | Required to power the AI coach |
+| API Key | Your Gemini key | Required to power the AI coach |
 | Hints per problem | 3 / 5 / 7 / 10 | Your hint budget for each problem |
 | Coaching style | Socratic / Direct / Gentle | How the AI communicates |
 
@@ -89,17 +86,15 @@ leetcode-guide-extension/
 ---
 
 ## 🔒 Privacy
-
 - Your API key is stored locally in Chrome's storage (`chrome.storage.local`)
-- Problem data is sent to Gemini's API to generate hints
+- Problem data is sent to Gemini 2.5 Flash API to generate hints
 - No data is sent to any other server
 
 ---
 
 ## 🛠 Requirements
-
 - Google Chrome (or Chromium-based browser)
-- A Gemini API key with access to `gemini-1.5-flash`
+- A Gemini API key with access to `gemini-2.5-flash`
 
 ---
 
