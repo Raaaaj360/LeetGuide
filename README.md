@@ -9,10 +9,10 @@ A Chrome extension that reads your active LeetCode problem and gives you **Socra
 - **Auto-reads the problem** — title, difficulty, and description extracted from the page
 - **Guided hints only** — the AI is instructed never to reveal the solution
 - **3 coaching styles**: Socratic (question-based), Direct (concise nudges), Gentle (step-by-step)
-- **Hint budget** — set a max of 3–10 hints per problem to keep yourself accountable
+- **Hint budget** — set a max of 3–10 hints per problem to keep yourself accountable the detailed breakdown is given on the last hint
 - **Quick actions** — one-click prompts for first hint, data structure suggestions, complexity targets
 - **Persistent chat** — your conversation is saved per-problem, pick up where you left off
-- **GPT-4o-mini powered** — fast and affordable
+- **Gemini-1.5-flash powered** — fast and affordable
 
 ---
 
@@ -33,7 +33,7 @@ git clone https://github.com/yourrepo/leetguide-extension
 ### Step 3: Add your API Key
 1. Click the LeetGuide icon in your Chrome toolbar
 2. Click **⚙ Settings**
-3. Paste your [OpenAI API key](https://platform.openai.com/api-keys)
+3. Paste your [LLM API key]([https://aistudio.google.com/api-keys](https://aistudio.google.com)
 4. Click **Save Settings**
 
 ---
@@ -52,7 +52,7 @@ git clone https://github.com/yourrepo/leetguide-extension
 
 | Setting | Options | Description |
 |---|---|---|
-| API Key | Your OpenAI key | Required to power the AI coach |
+| API Key | Your LLM key | Required to power the AI coach |
 | Hints per problem | 3 / 5 / 7 / 10 | Your hint budget for each problem |
 | Coaching style | Socratic / Direct / Gentle | How the AI communicates |
 
@@ -91,7 +91,7 @@ leetcode-guide-extension/
 ## 🔒 Privacy
 
 - Your API key is stored locally in Chrome's storage (`chrome.storage.local`)
-- Problem data is sent to OpenAI's API to generate hints
+- Problem data is sent to Gemini's API to generate hints
 - No data is sent to any other server
 
 ---
@@ -99,7 +99,7 @@ leetcode-guide-extension/
 ## 🛠 Requirements
 
 - Google Chrome (or Chromium-based browser)
-- An OpenAI API key with access to `gemini-1.5-flash`
+- A Gemini API key with access to `gemini-1.5-flash`
 
 ---
 
