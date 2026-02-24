@@ -184,10 +184,11 @@ async function sendMessage(userText) {
   showThinking();
 
   state.hintCount++;
+  const isLastHint = state.hintCount >= state.maxHints;
   $('hintUsed').textContent = state.hintCount;
 
   try {
-    const systemPrompt = buildSystemPrompt();
+    const systemPrompt = buildSystemPrompt(isLastHint);
     const apiMessages = [
       { role: 'system', content: systemPrompt },
       ...state.messages.slice(0, -1) // exclude the just-added user message (we add it next)
@@ -205,7 +206,7 @@ async function sendMessage(userText) {
       body: JSON.stringify({
         model: 'gpt-4o-mini',
         messages: apiMessages,
-        max_tokens: 400,
+        max_tokens: 1200,
         temperature: 0.7,
       }),
     });
@@ -232,7 +233,7 @@ async function sendMessage(userText) {
   $('sendBtn').disabled = false;
 }
 
-function buildSystemPrompt() {
+function buildSystemPrompt(isLastHint = false) {
   const p = state.problem;
   const styleInstructions = {
     socratic: `Use the Socratic method: ask probing questions that lead the user to discover the answer themselves. Never state a solution. Guide with "What if you considered...?", "Have you thought about...?", "What happens when...?" style prompts.`,
@@ -248,16 +249,26 @@ Difficulty: ${p.difficulty}
 Description: ${p.description ? p.description.slice(0, 1500) : 'Not available'}
 
 YOUR ROLE:
-- Guide the user toward solving this problem themselves
-- NEVER reveal the complete solution, working code, or the specific algorithm name upfront
-- Provide hints that help them think, not answers that short-circuit their thinking
+- By default, guide the user toward solving this problem themselves using hints and questions
 - If they share their approach, give targeted feedback on it
-- Keep responses concise (2-4 sentences or a short list at most)
+- Keep hint responses concise (2-4 sentences or a short list at most)
 
 COACHING STYLE: ${styleInstructions}
 
-RULES:
-1. Do not write complete code solutions
+${isLastHint ? `⚠️ LAST HINT — This is the user's final hint. Regardless of what they asked, you MUST now reveal the complete step-by-step process to solve this problem. Structure your response as:
+1. The core insight / key observation
+2. The algorithm/approach to use and why
+3. A numbered step-by-step walkthrough of the logic
+4. Time and space complexity
+Do NOT write any code. Explain purely in plain English. End with an encouraging message.
+
+` : ''}SOLUTION POLICY:
+- If the user EXPLICITLY asks for the solution, the full answer, or complete code (e.g. "give me the solution", "show me the code", "just tell me the answer"), provide a complete, well-commented solution in their preferred language (default to Python if not specified)
+- After giving the solution, briefly explain the approach, time complexity, and space complexity
+- If they haven't explicitly asked for the solution, continue guiding with hints only
+
+HINTS RULES:
+1. Do not write complete code solutions unless explicitly asked
 2. Do not name the exact algorithm until the user has nearly figured it out
 3. If they're completely wrong in approach, gently redirect with a question
 4. Encourage them when they're on the right track
