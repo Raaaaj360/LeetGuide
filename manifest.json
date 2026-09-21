@@ -2,11 +2,15 @@
   "manifest_version": 3,
   "name": "LeetGuide – AI Problem Coach",
   "version": "1.0.0",
-  "description": "Get Socratic hints for LeetCode problems powered by ChatGPT. Guided thinking, no spoilers.",
+  "description": "Get Socratic hints for LeetCode problems powered by Gemini, OpenAI, Claude, or Groq. Guided thinking, no spoilers.",
   "permissions": ["activeTab", "storage", "scripting"],
   "host_permissions": [
     "https://leetcode.com/*",
-    "https://generativelanguage.googleapis.com/*"
+    "https://generativelanguage.googleapis.com/*",
+    "https://api.openai.com/*",
+    "https://api.anthropic.com/*",
+    "https://api.groq.com/*",
+    "https://openrouter.ai/*"
   ],
   "action": {
     "default_popup": "popup.html",
